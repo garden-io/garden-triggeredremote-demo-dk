@@ -1,0 +1,31 @@
+kind: Command
+name: bump
+description:
+  short: create empty commit on project repo so we can trigger workflow on pull request
+args:
+  - name: wip-branch
+    description: Remote wip branch name
+    required: true
+variables:
+  main_branch: main
+  bump_branch: bump
+exec:
+  command:
+    - /bin/sh
+    - -c
+    - |-
+      if git rev-parse --quiet --verify ${var.bump_branch} > /dev/null; then
+        git branch -D ${var.bump_branch}
+      fi
+      git checkout -b ${var.bump_branch}
+      git commit --allow-empty -m "Bump for remote ${args.wip-branch}"
+      if git show-branch remotes/origin/${var.bump_branch} >/dev/null 2>/dev/null; then
+        git push origin -d ${var.bump_branch}
+      fi
+      git push origin ${var.bump_branch}
+      git checkout ${var.main_branch}
+gardenCommand:
+  - cloud
+  - secrets
+  - create 
+  - wip-branch=${args.wip-branch}

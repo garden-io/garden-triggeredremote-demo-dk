@@ -1,0 +1,22 @@
+kind: Project
+name: triggeredremotes
+
+environments:
+  - name: dev
+    defaultNamespace: triggeredremotes-dev
+  - name: preview
+    defaultNamespace: triggeredremotes-preview
+    variables:
+      remoteBranch: wip-bump # set from secret
+
+defaultEnvironment: dev
+
+providers:
+  - name: local-kubernetes
+    namespace: ${environment.namespace}
+    environments: [dev, preview]
+
+sources:
+  - name: remote
+    repositoryUrl: https://github.com/dmytri/garden-remote.git#${var.remoteBranch || "main"}
+

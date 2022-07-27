@@ -1,0 +1,14 @@
+kind: Workflow
+name: deploy
+description: Deploy environment
+steps:
+  - script: TODO
+    name: auth
+    description: connect to cluster
+    skip: true
+  - command: [deploy]
+    name: deploy
+    description: garden deploy
+triggers:
+  - events: [pull-request]
+    environment: preview
