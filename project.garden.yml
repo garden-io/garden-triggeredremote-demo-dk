@@ -10,15 +10,16 @@ environments:
   - name: preview
     defaultNamespace: triggeredremotes-preview
     variables:
-      remoteBranch: wip-bump # set from secret
+      remoteBranch: ${secrets.wip-branch || wip-bump}
 
 defaultEnvironment: dev
 
 providers:
   - name: local-kubernetes
-    namespace: ${environment.namespace}
     environments: [dev]
+    namespace: ${environment.namespace}
   - name: kubernetes
+    environments: [preview]
     namespace: ${environment.namespace}
     context: gke_garden-demo-324810_europe-west1-b_demo-3
     ingressClass: "nginx"
@@ -29,7 +30,6 @@ providers:
     deploymentRegistry:
       hostname: eu.gcr.io
       namespace: garden-demo-324810
-    environments: [preview]
 
 sources:
   - name: remote
