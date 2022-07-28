@@ -17,7 +17,19 @@ defaultEnvironment: dev
 providers:
   - name: local-kubernetes
     namespace: ${environment.namespace}
-    environments: [dev, preview]
+    environments: [dev]
+  - name: kubernetes
+    namespace: ${environment.namespace}
+    context: gke_garden-demo-324810_europe-west1-b_demo-3
+    ingressClass: "nginx"
+    buildMode: cluster-buildkit
+    imagePullSecrets:
+      - name: gcr-json-key
+        namespace: default
+    deploymentRegistry:
+      hostname: eu.gcr.io
+      namespace: garden-demo-324810
+    environments: [preview]
 
 sources:
   - name: remote
