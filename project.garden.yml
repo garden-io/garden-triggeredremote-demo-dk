@@ -1,6 +1,9 @@
 kind: Project
 name: triggeredremotes
 
+id: 7534eab0-a475-4452-a4bd-5f3782478f5d
+domain: https://example.app.garden
+
 environments:
   - name: dev
     defaultNamespace: triggeredremotes-dev
