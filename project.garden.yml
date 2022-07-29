@@ -5,21 +5,23 @@ id: 7534eab0-a475-4452-a4bd-5f3782478f5d
 domain: https://example.app.garden
 
 environments:
+  - name: local
+    defaultNamespace: triggeredremotes-local
   - name: dev
     defaultNamespace: triggeredremotes-dev
   - name: preview
     defaultNamespace: triggeredremotes-preview
     variables:
-      remoteBranch: ${secrets.wip-branch || wip-bump}
+      remoteBranch: ${secrets.wip-branch || "wip-bump"}
 
 defaultEnvironment: dev
 
 providers:
   - name: local-kubernetes
-    environments: [dev]
+    environments: [local]
     namespace: ${environment.namespace}
   - name: kubernetes
-    environments: [preview]
+    environments: [dev, preview]
     namespace: ${environment.namespace}
     context: gke_garden-demo-324810_europe-west1-b_demo-3
     ingressClass: "nginx"
