@@ -38,3 +38,13 @@ sources:
   - name: remote
     repositoryUrl: https://github.com/dmytri/garden-remote.git#${var.remoteBranch || "main"}
 
+variables:
+  authScript: |-
+      mkdir -p tmp/gcloud
+      cat <<EOF > tmp/gcloud/gcloud.json
+      ${secrets.GCLOUD_JSON}
+      EOF
+      gcloud auth activate-service-account --key-file=tmp/gcloud/gcloud.json
+      gcloud container clusters get-credentials demo-3 --zone europe-west1-b --project garden-demo-324810
+      rm -rf tmp/gcloud
+

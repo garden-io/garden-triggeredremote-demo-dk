@@ -1,19 +1,18 @@
 kind: Workflow
 name: deploy
 description: Deploy environment
+
 steps:
-  - script: |-
-      mkdir -p tmp/gcloud
-      cat <<EOF > tmp/gcloud/gcloud.json
-      ${secrets.GCLOUD_JSON}
-      EOF
-      gcloud auth activate-service-account --key-file=tmp/gcloud/gcloud.json
-      gcloud container clusters get-credentials demo-3 --zone europe-west1-b --project garden-demo-324810
-      rm -rf tmp/gcloud
+  - script: ${var.authScript}
     name: setup
   - command: [deploy]
     name: deploy
     description: garden deploy
+  - command:
+    - cloud
+    - secrets
+    - delete 
+    - wip-branch
 triggers:
   - events: [pull-request]
     environment: preview
