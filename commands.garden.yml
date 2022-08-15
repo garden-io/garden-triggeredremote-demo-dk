@@ -24,6 +24,9 @@ exec:
       fi
       git push origin ${var.bump_branch}
       git checkout ${var.main_branch}
+      if garden cloud secrets list | grep -q wip-branch; then
+        garden cloud secrets delete wip-branch --yes
+      fi
 gardenCommand:
   - cloud
   - secrets

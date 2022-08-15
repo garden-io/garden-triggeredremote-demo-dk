@@ -8,11 +8,6 @@ steps:
   - command: [deploy]
     name: deploy
     description: garden deploy
-  - command:
-    - cloud
-    - secrets
-    - delete 
-    - wip-branch
 triggers:
   - events: [pull-request]
     environment: preview
