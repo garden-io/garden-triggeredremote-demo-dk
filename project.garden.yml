@@ -19,6 +19,7 @@ defaultEnvironment: dev
 providers:
   - name: local-kubernetes
     environments: [local]
+    buildMode: cluster-buildkit
     namespace: ${environment.namespace}
   - name: kubernetes
     environments: [dev, preview]

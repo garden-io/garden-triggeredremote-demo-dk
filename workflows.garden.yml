@@ -3,7 +3,6 @@ name: deploy
 description: Deploy environment
 steps:
   - script: |-
-      echo '${secrets.GCLOUD_JSON}'
       mkdir -p tmp/gcloud
       cat <<EOF > tmp/gcloud/gcloud.json
       ${secrets.GCLOUD_JSON}
