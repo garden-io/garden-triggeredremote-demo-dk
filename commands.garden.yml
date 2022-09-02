@@ -28,9 +28,6 @@ exec:
       if [ -n "$SECRET_ID" ]; then
         garden cloud secrets delete "$SECRET_ID" --yes
       fi
-      if garden cloud secrets list | grep -q wip-branch; then
-        garden cloud secrets delete wip-branch --yes
-      fi
 gardenCommand:
   - cloud
   - secrets
